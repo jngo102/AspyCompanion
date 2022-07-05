@@ -1,4 +1,3 @@
-using GlobalEnums;
 using System.Linq;
 using UnityEngine;
 
@@ -19,7 +18,20 @@ namespace AspyCompanion
 
         private void OnEnable()
         {
-            _target = FindObjectsOfType<GameObject>().Where(go => go.layer == (int)PhysLayers.ENEMIES).OrderBy(enemy => (transform.position - enemy.transform.position).magnitude).First();
+            GameObject closestEnemy = null;
+            float closestDistance = float.MaxValue;
+            var enemies = FindObjectsOfType<GameObject>().Where(go => go.GetComponent<HealthManager>() != null).ToArray();
+            for (int i = 0; i < enemies.Count(); i++)
+            {
+                var enemy = enemies[i];
+                float distance = (enemy.transform.position - transform.position).magnitude;
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemy;
+                }
+            }
+            _target = closestEnemy;
         }
 
         private void Update()

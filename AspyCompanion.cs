@@ -1,13 +1,9 @@
 ﻿using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using Modding;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using UObject = UnityEngine.Object;
 using Vasi;
 
 namespace AspyCompanion
