@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1801984111
+CRC: 1354524062
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3d6714a035c9d0d712404ea534ee74da
+    Hash: dd79ae722924479cd8c29429a85e535c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9d489b35fdc17cb93321afca22c6bbef
@@ -15,10 +15,11 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Textures/Texture.png
 - Assets/AudioClips/Sleep.wav
 - Assets/AudioClips/Idle 2.wav
+- Assets/Textures/Charm.png
 - Assets/AudioClips/Attack 1.wav
 - Assets/AudioClips/Attack 2.wav
-- Assets/Textures/Texture.png
 - Assets/AudioClips/Idle 1.wav
 Dependencies: []

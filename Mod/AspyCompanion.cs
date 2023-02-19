@@ -20,10 +20,7 @@ namespace AspyCompanion
 
         private Dictionary<string, AudioClip> _clips = new();
         private Texture2D _aspyTexture;
-        public override string GetVersion()
-        {
-            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        }
+        public override string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public override void Initialize()
         {
@@ -51,13 +48,13 @@ namespace AspyCompanion
                 self.FsmVariables.FloatVariables = floats.ToArray();
 
                 var voiceLoop = self.Fsm.GetFsmGameObject("Voice Loop");
-                voiceLoop.Value.GetComponent<AudioSource>().clip = _clips["Idle " + Random.Range(1, 4)];
+                voiceLoop.Value.GetComponent<AudioSource>().clip = _clips["Idle " + Random.Range(1, 3)];
 
                 var restState = self.GetState("Rest Start");
                 var shootState = self.GetState("Shoot");
                 var changeState = self.GetState("Change");
 
-                var setRandomClip = (AudioSource audioSource) => audioSource.clip = _clips["Idle " + Random.Range(1, 4)];
+                var setRandomClip = (AudioSource audioSource) => audioSource.clip = _clips["Idle " + Random.Range(1, 3)];
 
                 self.GetState("Follow").InsertAction(0, new SetRandomAudioClip
                 {
@@ -77,7 +74,7 @@ namespace AspyCompanion
                 var anticAudio = self.GetAction<AudioPlayerOneShot>("Antic", 6);
                 anticAudio.audioClips[0] = _clips["Attack 1"];
                 anticAudio.audioClips[1] = _clips["Attack 2"];
-                
+
                 restState.RemoveAction<AudioStop>();
                 restState.AddAction(new SetAudioClip
                 {
@@ -101,15 +98,15 @@ namespace AspyCompanion
                         Value = null,
                     },
                 });
-                
+
                 var fireAtTarget = shootState.GetAction<FireAtTarget>(7);
                 fireAtTarget.spread = 0;
                 var target = fireAtTarget.target;
-                
+
                 var fire = shootState.GetAction<SpawnObjectFromGlobalPool>(4);
                 fire.gameObject.Value.CreatePool(3);
                 var flameBall = fire.storeObject;
-                
+
                 shootState.AddAction(new GetAngleToTarget2D
                 {
                     gameObject = new FsmOwnerDefault(),
@@ -179,13 +176,17 @@ namespace AspyCompanion
                     if (!resourceName.Contains("aspy")) continue;
 
                     var bundle = AssetBundle.LoadFromStream(stream);
-                    
+
                     bundle.LoadAllAssets<AudioClip>().ToList().ForEach(clip =>
                     {
                         _clips.Add(clip.name, clip);
                     });
 
                     _aspyTexture = bundle.LoadAsset<Texture2D>("Texture");
+
+                    var charmTexture = bundle.LoadAsset<Texture2D>("Charm");
+                    var charmSprite = Sprite.Create(charmTexture, new Rect(0, 0, charmTexture.width, charmTexture.height), new Vector2(0.5f, 0.5f));
+                    GameCameras.instance.hudCamera.transform.Find("Charm Icons").GetComponent<CharmIconList>().grimmchildLevel4 = charmSprite;
 
                     stream.Dispose();
                 }

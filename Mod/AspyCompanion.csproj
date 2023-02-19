@@ -7,8 +7,8 @@
     <AssemblyTitle>AspyCompanion</AssemblyTitle>
     <Product>AspyCompanion</Product>
     <Description>Replaces Grimmchild with Ayu_Draws' Aspy</Description>
-    <Copyright>Copyright © </Copyright>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <Copyright>Copyright © jngo102 2023</Copyright>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <!-- Path to DLL references required to build mod -->
-    <LocalRefs>References</LocalRefs>
+    <LocalRefs>$(MSBuildProgramFiles32)/Steam/steamapps/common/Hollow Knight/hollow_knight_Data/Managed</LocalRefs>
     <!-- The folder that exports will be generated in -->
     <ExportDir>Output</ExportDir>
   </PropertyGroup>
@@ -44,7 +44,6 @@
     <MakeDir Directories="$(ExportDir)" />
     <MakeDir Directories="$(ExportDir)/zip" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ExportDir)" />
-    <Copy Condition="'$(DocumentationFile)' != ''" SourceFiles="ReadMe.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb;$(TargetDir)/$(TargetName).xml" DestinationFolder="$(ExportDir)/zip" />
     <Copy Condition="'$(DocumentationFile)' == ''" SourceFiles="ReadMe.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(ExportDir)/zip/" />
     <ZipDirectory SourceDirectory="$(ExportDir)/zip" DestinationFile="$(ExportDir)/$(TargetName).zip" />
     <RemoveDir Directories="$(ExportDir)/zip" />
